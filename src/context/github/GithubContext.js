@@ -44,12 +44,17 @@ export const GithubProvider = ({ children }) => {
             },
         });
 
-        const { items } = await response.json();
+        if (response.status === 404) {
+            window.location = '/notfound'
+        } else {
+            const data = await response.json();
 
-        dispatch({
-            type: 'GET_USERS',
-            payload: items
-        })
+            dispatch({
+                type: 'GET_USER',
+                payload: data
+            })
+        }
+
     };
 
     // clear users from state
@@ -61,7 +66,9 @@ export const GithubProvider = ({ children }) => {
         users: state.users,
         user: state.user,
         loading: state.loading,
-        searchUsers, clearUsers
+        searchUsers,
+        clearUsers,
+        getUser
     }}>
         {children}
     </GithubContext.Provider>
