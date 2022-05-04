@@ -14,7 +14,7 @@ function UserItem({ user }) {
         <div>
           <h2 className="card-title">{user.login}</h2>
           <Link
-            className="text-base-content text-opacity-40"
+            className="text-base-content text-opacity-50 hover:text-sky-500"
             to={`user/${user.login}`}
           >
             Visit Profile
