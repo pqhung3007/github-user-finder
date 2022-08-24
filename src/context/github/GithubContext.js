@@ -18,7 +18,6 @@ export const GithubProvider = ({ children }) => {
 
     const searchUsers = async (text) => {
         setLoading()
-
         const params = new URLSearchParams({
             q: text
         })
@@ -27,9 +26,7 @@ export const GithubProvider = ({ children }) => {
                 Authorization: `token ${GITHUB_TOKEN}`,
             },
         });
-
         const { items } = await response.json();
-
         dispatch({
             type: 'GET_USERS',
             payload: items
@@ -49,7 +46,6 @@ export const GithubProvider = ({ children }) => {
             window.location = '/notfound'
         } else {
             const data = await response.json();
-
             dispatch({
                 type: 'GET_USER',
                 payload: data
@@ -70,7 +66,6 @@ export const GithubProvider = ({ children }) => {
                 Authorization: `token ${GITHUB_TOKEN}`,
             },
         });
-
         const data = await response.json();
 
         dispatch({

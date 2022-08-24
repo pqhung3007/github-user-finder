@@ -1,21 +1,28 @@
-import { useContext } from "react";
-import Spinner from "../layout/Spinner";
+import { useState, useEffect } from "react";
 import UserItem from "./UserItem";
-import GithubContext from "../../context/github/GithubContext";
 
 function UserResults() {
-  const { users, loading } = useContext(GithubContext);
+  const [users, setUsers] = useState([]);
 
-  //todo consider using tertiary operator
-  // if (!loading) {
-  // } else {
-  //   <Spinner />;
-  // }
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    const response = await fetch(`${process.env.REACT_APP_GITHUB_URL}/users`, {
+      headers: {
+        Authorization: `token ${process.env.REACT_APP_TOKEN}`,
+      },
+    });
+    const data = await response.json();
+    setUsers(data);
+  };
+
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 md:grid-cols-2">
-      {users.map((user) => (
-        <UserItem key={user.id} user={user} />
-      ))}
+    <div className="max-w-6xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {users.map((user) => {
+        return <UserItem key={user.id} user={user} />;
+      })}
     </div>
   );
 }
